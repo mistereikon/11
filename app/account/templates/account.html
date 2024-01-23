@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %} Мій профіль {% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="content">
+    <h1>Мій профіль</h1>
+    {% if user %}
+        <img src="{{ url_for('static', filename='images/' + user.image_file) }}" alt="Фото профілю" style="max-width: 150px;">
+        <p>Логін: {{ user.RegName }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>About Me: {{ user.about_me }}</p> <!-- Display About Me -->
+
+        <h2>Оновити профіль</h2>
+
+        <form method="POST" action="{{ url_for('change_profile_picture') }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="profile_picture">Обрати фото профілю</label>
+                <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Змінити фото профілю" class="btn btn-primary">
+            </div>
+        </form>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            
+           
+        </form>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label }} {{ form.username(class="form-control") }}
+                <!-- Додати поле для нового паролю -->
+                {{ form.password.label }} {{ form.password(class="form-control") }}
+                {% for error in form.username.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.email.label }} {{ form.email(class="form-control") }}
+                {% for error in form.email.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.about_me.label }} {{ form.about_me(class="form-control") }} <!-- About Me field -->
+                {% for error in form.about_me.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+        <p>Last Seen: {{ user.last_seen }}</p>
+    {% endif %}
+</div>
+{% endblock %}

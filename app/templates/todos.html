@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %} Список користувачів {% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="content">
+    <h1>Список завдань (з бази даних)</h1>
+    <!-- Form for adding a new user -->
+    <form method="POST" action="{{ url_for('add_user') }}">
+        <label for="name">Завдання:</label>
+        <input type="text" id="name" name="name">
+        <label for="password">Опис:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Додати</button>
+    </form>
+    
+    <table style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #ddd; padding: 8px;">№</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Завдання</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Опис</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Дія</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Редагувати</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.id }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ user.password }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                        <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}">
+                            <button type="submit">Видалити</button>
+                        </form>
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                        <form method="POST" action="{{ url_for('edit_user', user_id=user.id) }}">
+                            <input type="text" name="new_name" placeholder="Нове завдання">
+                            <input type="text" name="new_password" placeholder="Новий опис">
+                            <button type="submit">Зберегти</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Your styles or scripts -->
+{% endblock %}

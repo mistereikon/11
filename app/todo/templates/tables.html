@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block body %}
+<table class="table">
+    <tr>
+        <th>Параметр</th>
+        <th>Інформація</th>
+    </tr>
+    <tr>
+        <td>Ім'я</td>
+        <td>Tom</td>
+    </tr>
+    <tr>
+        <td>Прізвище</td>
+        <td>Hardy</td>
+    </tr>
+    <tr>
+        <td>По батькові</td>
+        <td>Edward</td>
+    </tr>
+    <tr>
+        <td>Університет</td>
+        <td>Richmond Drama School</td>
+    </tr>
+    <tr>
+        <td>Спеціальність</td>
+        <td>Acting skill</td>
+    </tr>
+    <!-- Додайте інші відомості, які вам потрібні -->
+</table>
+<style>
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table, th, td {
+        border: 2px solid black;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+{% endblock %}

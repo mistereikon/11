@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="content">
+    
+    <div class="text">
+        <h1>Головна сторінка</h1>
+    </div>
+    
+</div>
+
+<div id="footer">
+    <p>Operating System and User Agent: {{ user_agent }}</p>
+    <p>Час: {{ current_time }}</p>
+</div>
+
+
+
+<style>
+    
+    .content {
+        background-color: #f2f2f2; /* Колір фону */
+        display: flex;
+        
+    justify-content: center; /* Горизонтальне центрування */
+    align-items: center;
+    line-height: 1;
+    }
+    
+   
+</style>
+{% endblock %}

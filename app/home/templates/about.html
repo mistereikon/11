@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %} About{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+Я
+
+    <div class="row">
+    <div class="mybg col ">
+      <div class="text-center">
+        <img class="rounded" width="700" src="{{ url_for('static', filename='images/16.jpg') }}">
+      </div>
+    </div>
+    <div class="col">
+      <div class="card border-primary mb-3" style="max-width: 20rem;">
+           
+                <div class="card-body">
+                  <h4 class="card-title">Про мене</h4>
+                  <p class="card-text">Зараз моя основна мета - успішно здати цю лабораторну роботу. Я віддав своє вільний час, зосередивши свою увагу і знання на виконанні завдань цієї лабораторної роботи. Я знаю, що це важливий крок на шляху до досягнення моїх основних академічних і професійних цілей. Тому я старанно дотримуюся вимог, вивчаю матеріал, консультуюсь з викладачем та співстудентами, щоб переконатися, що я подам якісну та інформативну лабораторну роботу. Я впевнений, що мої зусилля допоможуть мені досягти успіху в цьому завданні.</p></div>
+     </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

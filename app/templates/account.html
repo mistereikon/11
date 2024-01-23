@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %} Мій профіль {% endblock %}
+
+{% block css %}
+  {{ super() }}
+  <style>
+    /* Стилі для сторінки "Мій профіль" */
+    .content {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #007bff; /* Основний колір для заголовка */
+    }
+
+    img {
+      border-radius: 8px;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #007bff; /* Основний колір для підзаголовка */
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    /* Стилі для кнопок форми */
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: #007bff; /* Основний колір для кнопки */
+      color: white;
+    }
+
+    /* Стилі для полів введення форми */
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    /* Стилі для помилок у формі */
+    span[style="color: red;"] {
+      display: block;
+      color: red;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    /* Стилі для файлового вибору */
+    .form-control-file {
+      margin-top: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  {{ super() }}
+  <div class="content">
+    <h1>Мій профіль</h1>
+    {% if user %}
+    <img src="{{ url_for('static', filename='images/' + user.image_file) }}" alt="Фото профілю" style="max-width: 100px;">
+      <p>Логін: {{ user.RegName }}</p>
+      <p>Email: {{ user.email }}</p>
+      <p>About Me: {{ user.about_me }}</p>
+
+      <h2>Оновити профіль</h2>
+
+      <form method="POST" action="{{ url_for('change_profile_picture') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          <label for="profile_picture">Обрати фото профілю</label>
+          <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Змінити фото профілю" class="btn btn-primary">
+        </div>
+      </form>
+
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <h2>Змінити логін та пароль</h2>
+        <div class="form-group">
+            {{ form.username.label }} {{ form.username(class="form-control") }}
+            {% for error in form.username.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }} {{ form.password(class="form-control") }}
+            {% for error in form.password.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Змінити логін та пароль" class="btn btn-primary">
+        </div>
+    </form>
+    
+
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.username.label }} {{ form.username(class="form-control") }}
+          {{ form.password.label }} {{ form.password(class="form-control") }}
+          {% for error in form.username.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.email.label }} {{ form.email(class="form-control") }}
+          {% for error in form.email.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.about_me.label }} {{ form.about_me(class="form-control") }}
+          {% for error in form.about_me.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-primary") }}
+        </div>
+      </form>
+
+      <p>Last Seen: {{ user.last_seen }}</p>
+    {% endif %}
+  </div>
+{% endblock %}

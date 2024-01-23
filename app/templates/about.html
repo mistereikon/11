@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %} About{% endblock %}
+
+{% block css %}
+  {{ super() }}
+  <style>
+    /* Стилі для сторінки About */
+    .container {
+      margin-top: 50px;
+    }
+
+    .mybg {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .col {
+      flex: 1;
+    }
+
+    .card {
+      margin-top: 20px;
+    }
+
+    .card-title {
+      color: #007bff; /* Primary color for the card title */
+    }
+
+    .card-text {
+      font-size: 16px;
+    }
+
+    .rounded {
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="mybg col ">
+        <div class="text-center">
+          <img class="rounded" width="700" src="{{ url_for('static', filename='images/16.jpg') }}">
+        </div>
+      </div>
+      <div class="col">
+        <div class="card border-primary mb-3" style="max-width: 20rem;">
+          <div class="card-body">
+            <h4 class="card-title">Про мене</h4>
+            <p class="card-text">Наразі моя основна мета - успішно виконати дану лабораторну роботу. Я віддав свій вільний час, зосереджуючи увагу та знання на виконанні завдань цього проекту. Розумію, що це значущий крок на шляху до досягнення моїх основних академічних та професійних цілей. Тому я ретельно виконую всі вимоги, вивчаю необхідний матеріал та звертаюсь за консультацією до викладача та співстудентів. Мета - подати якісну та інформативну лабораторну роботу. Впевнений, що мої зусилля призведуть до успіху у виконанні завдання.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

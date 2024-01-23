@@ -1,0 +1,85 @@
+{% set menu = {
+    "Домашня": url_for("home"),
+    "Про мене": url_for("about"),
+    "Навички": url_for("skills"),
+    "Таблиця": url_for("tables"),
+    "ToDo": url_for("get_todos"),
+    "COOKIES(Admin)": url_for("info"),
+    "Posts": url_for("posts"),
+    "Користувачі": url_for("registered_users"),
+ 
+} %}
+
+{% if 'username' in session %}
+    {% set _ = menu.update({
+        "Мій профіль": url_for("account"),
+        "Вихід": url_for("logout")
+    }) %}
+{% else %}
+    {% set _ = menu.update({
+        "Реєстрація": url_for("register"),
+        "ВХІД": url_for("new_login")
+    }) %}
+{% endif %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Page Title</title>
+  
+  
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+ 
+  <style>
+    
+      .navbar {
+          background-color: #000000;
+      }
+
+      .navbar-brand {
+          color: #fff;
+      }
+
+      .navbar-toggler-icon {
+          background-color: #ffffff;
+      }
+
+      .navbar-nav .nav-item {
+          margin: 0 10px;
+      }
+
+      .navbar-nav .nav-link {
+          color: #fff;
+      }
+
+      .navbar-nav .nav-link:hover {
+          color: #a8a8a8;
+      }
+  </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    {% for name, url in menu.items() %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url }}">{{ name | upper }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+      </nav>
+
+
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="content">
+    
+    <div class="text">
+        <h1>Головна сторінка</h1>
+        <p>Ласкаво просимо на головну сторінку!</p>
+        <p>Тут ви знайдете багато корисної і цікавої інформації.</p>
+        <p>Я стараюся, щоб зробити ваше перебування на нашому сайті комфортним.</p>
+        <p>Я завжди вдячний за вашу підтримку та активну участь.</p>
+        <p>Переглядайте матеріали.</p>
+        <a href="{{ url_for('page1') }}" class="btn btn-primary"style="background-color: green; color: white; border: 2px solid green;">Факт №1</a>
+        <a href="{{ url_for('page2') }}" class="btn btn-primary"style="background-color: green; color: white; border: 2px solid green;">Факт №2</a>
+        <a href="{{ url_for('page3') }}" class="btn btn-primary"style="background-color: green; color: white; border: 2px solid green;">Факт №3</a>
+    </div>
+
+    <div class="image">
+        <img class="rounded" width="350" src="{{ url_for('static', filename='images/15.jpg') }}">
+    </div>
+    
+</div>
+
+<div id="footer">
+    <p>Operating System and User Agent: {{ user_agent }}</p>
+    <p>Час: {{ current_time }}</p>
+</div>
+
+
+
+<style>
+    
+    .content {
+        background-color: #f2f2f2; /* Колір фону */
+        display: flex;
+        
+    justify-content: center; /* Горизонтальне центрування */
+    align-items: center;
+    line-height: 1;
+    }
+    
+   
+</style>
+{% endblock %}

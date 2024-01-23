@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} Користувачі {% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="content">
+    <h1>Список користувачів</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ім'я</th>
+                <!-- Додайте інші необхідні стовпці -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <!-- Додайте інші стовпці, які вам потрібні -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Ваші стилі або скрипти -->
+{% endblock %}

@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <style>
+    /* Глобальні стилі */
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Стилі для заголовка */
+    .header {
+      text-align: center;
+      color: #333;
+    }
+
+    /* Стилі для форми створення посту */
+    .post-form {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    /* Стилі для таблиці постів */
+    .post-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .post-table th, .post-table td {
+      border: 1px solid #dddddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .post-table th {
+      background-color: #f2f2f2;
+    }
+
+    /* Стилі для текстових полів */
+    .input-field,
+    .textarea-field,
+    .select-field {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      word-wrap: break-word;  /* Додано для автоматичного переносу слова */
+    }
+
+    .input-wide {
+      width: 100%;  /* Збільшено ширину input */
+    }
+
+    .readonly-field {
+      background-color: #f9f9f9;
+    }
+
+    /* Стилі для кнопок */
+    .btn-create,
+    .btn-update,
+    .btn-delete {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+      margin-right: 8px;
+    }
+
+    .btn-create {
+      background-color: #4caf50;
+    }
+
+    .btn-update {
+      background-color: #008CBA;
+    }
+
+    .btn-delete {
+      background-color: #f44336;
+    }
+  </style>
+
+  <div class="container">
+    <h1 class="header">CRUD для постів</h1>
+    <form method="POST" action="{{ url_for('posts') }}" class="post-form">
+      <label for="title" class="label">Title:</label><br>
+      <input type="text" id="title" name="title" value="Test 2" class="input-field input-wide"><br><br>
+
+      <label for="content" class="label">Content:</label><br>
+      <textarea id="content" name="content" class="textarea-field input-wide"></textarea><br><br>
+
+      <input type="submit" name="action" value="create" class="btn-create">
+    </form>
+
+    <table class="post-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Created</th>
+          <th>Type</th>
+          <th>Enabled</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+          <tr>
+            <form method="POST" action="{{ url_for('posts') }}" class="post-update-form">
+              <td>
+                <input type="text" name="id" value="{{ post.id }}" disabled class="readonly-field">
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+              </td>
+              <td><input type="text" name="title" value="{{ post.title }}" class="input-field input-wide"></td>
+              <td><textarea name="content" class="textarea-field input-wide">{{ post.content }}</textarea></td>
+              <td><input type="text" name="created" value="{{ post.created }}" disabled class="readonly-field"></td>
+              <td><input type="text" name="type" value="{{ post.type }}" class="input-field input-wide"></td>
+              <td>
+                <select name="enabled" class="select-field">
+                  <option value="True" {% if post.enabled %} selected {% endif %}>True</option>
+                  <option value="False" {% if not post.enabled %} selected {% endif %}>False</option>
+                </select>
+              </td>
+              <td>
+                <input type="submit" name="action" value="update" class="btn-update">
+                <input type="submit" name="action" value="delete" onclick="confirmDelete('{{ post.id }}')" class="btn-delete">
+              </td>
+            </form>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+<script>
+    // Функція, яка відкриває спливаюче вікно на підтвердження видалення
+    function confirmDelete(postId) {
+        var result = confirm("Ви впевнені, що хочете видалити цей пост?");
+        if (result) {
+            // Якщо користувач підтвердив видалення, відправте форму для видалення поста
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/delete-post'; // Замініть '/delete-post' на URL для обробки видалення поста
+
+            var hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = 'post_id';
+            hiddenField.value = postId;
+
+            form.appendChild(hiddenField);
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            // Скасування дії видалення
+            return false;
+        }
+    }
+</script>
+{% endblock %}

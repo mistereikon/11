@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Info</title>
+</head>
+<body>
+    <h1>Info</h1>
+    {% if username %}
+        <p>Привіт, {{ username }}!</p>
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+        <h2>Управління кукі</h2>
+        <form method="POST">
+            <label for="cookie_key">Ключ кукі:</label>
+            <input type="text" name="cookie_key" required><br>
+            <label for="cookie_value">Значення кукі:</label>
+            <input type="text" name="cookie_value" required><br>
+            <label for="cookie_expiry">Термін дії кукі (секунди):</label>
+            <input type="number" name="cookie_expiry" required><br>
+            <input type="submit" name="add_cookie" value="Додати кукі">
+        </form>
+
+        <h2>Збережені кукі</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ключ</th>
+                    <th>Значення</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in cookies.items() %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('delete_cookie') }}">
+                                <input type="hidden" name="cookie_key" value="{{ key }}">
+                                <input type="submit" value="Видалити">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Зміна пароля</h2>
+        <form method="POST">
+            <label for="new_password">Новий пароль:</label>
+            <input type="password" name="new_password" required><br>
+            <input type="submit" name="change_password" value="Змінити пароль">
+        </form>
+
+        <p>{{ message }}</p>
+    {% else %}
+        <p>You are not logged in.</p>
+    {% endif %}
+
+</body>
+</html>
+{% endblock %}
